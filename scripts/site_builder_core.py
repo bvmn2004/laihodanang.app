@@ -99,20 +99,20 @@ def render_page_shell(path, title, meta_desc, h1, body_content, og_image="/asset
   <meta name="twitter:description" content="{meta_desc}">
   <meta name="twitter:image" content="{og_img_url}">
 
-  <!-- Favicon & App Icons -->
+  <!-- Official Nhu Y Driver Favicon -->
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
   <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
 
-  <!-- Apple Touch Icon -->
+  <!-- Apple Devices -->
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
-  <!-- Web App Manifest -->
+  <!-- Android & PWA -->
   <link rel="manifest" href="/site.webmanifest">
 
-  <!-- Browser & OS Theme Meta -->
+  <!-- Browser Theme -->
   <meta name="application-name" content="Như Ý Driver">
   <meta name="apple-mobile-web-app-title" content="Như Ý Driver">
   <meta name="theme-color" content="#c32932">
