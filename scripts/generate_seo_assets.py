@@ -89,6 +89,50 @@ with open(PROJECT_ROOT / "CNAME", "w", encoding="utf-8") as f:
     f.write("laihodanang.app\n")
 print("Generated CNAME (laihodanang.app)")
 
+# Web App Manifest
+manifest_content = {
+    "name": "Lái Xe Hộ Như Ý Driver Đà Nẵng",
+    "short_name": "Như Ý Driver",
+    "description": "Dịch vụ tài xế lái xe hộ ô tô và xe máy uy tín tại Đà Nẵng 24/7.",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#ffffff",
+    "theme_color": "#c32932",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/icon-maskable-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "/icon-maskable-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
+
+import json
+with open(PROJECT_ROOT / "site.webmanifest", "w", encoding="utf-8") as f:
+    json.dump(manifest_content, f, ensure_ascii=False, indent=2)
+print("Generated site.webmanifest")
+
 # GitHub Pages .nojekyll to prevent Jekyll from skipping static asset folders
 (PROJECT_ROOT / ".nojekyll").touch(exist_ok=True)
 print("Created .nojekyll for GitHub Pages")

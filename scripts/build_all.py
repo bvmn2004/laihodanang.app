@@ -7,6 +7,7 @@ sys.stdout.reconfigure(encoding='utf-8')
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
 scripts = [
+    "scripts/generate_favicons.py",
     "scripts/generate_home.py",
     "scripts/generate_main_pages.py",
     "scripts/generate_services.py",

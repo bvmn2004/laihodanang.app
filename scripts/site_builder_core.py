@@ -80,7 +80,6 @@ def render_page_shell(path, title, meta_desc, h1, body_content, og_image="/asset
   <meta name="description" content="{meta_desc}">
   {canonical_tag}
   <meta name="robots" content="{robots_content}">
-  <meta name="theme-color" content="#0B1730">
 
   <!-- Open Graph -->
   <meta property="og:locale" content="vi_VN">
@@ -100,9 +99,25 @@ def render_page_shell(path, title, meta_desc, h1, body_content, og_image="/asset
   <meta name="twitter:description" content="{meta_desc}">
   <meta name="twitter:image" content="{og_img_url}">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/webp" href="/assets/images/logo.webp">
-  <link rel="apple-touch-icon" href="/assets/images/logo.webp">
+  <!-- Favicon & App Icons -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+
+  <!-- Apple Touch Icon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Browser & OS Theme Meta -->
+  <meta name="application-name" content="Như Ý Driver">
+  <meta name="apple-mobile-web-app-title" content="Như Ý Driver">
+  <meta name="theme-color" content="#c32932">
+  <meta name="msapplication-TileColor" content="#c32932">
+  <meta name="msapplication-TileImage" content="/mstile-150x150.png">
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="/assets/css/style.css">
