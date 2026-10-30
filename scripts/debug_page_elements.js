@@ -1,0 +1,94 @@
+const { spawn } = require('child_process');
+const http = require('http');
+
+const EDGE_PATH = "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";
+const PORT = 9222;
+
+async function checkPage() {
+  const edge = spawn(EDGE_PATH, [
+    `--remote-debugging-port=${PORT}`,
+    '--headless',
+    '--disable-gpu',
+    `http://localhost:8080/bang-gia/`
+  ]);
+
+  await new Promise(r => setTimeout(r, 1500));
+
+  try {
+    const listData = await fetchJson(`http://127.0.0.1:${PORT}/json`);
+    const pageTarget = listData.find(t => t.type === 'page');
+    const ws = new WebSocket(pageTarget.webSocketDebuggerUrl);
+    await new Promise(r => ws.onopen = r);
+
+    let msgId = 1;
+    function sendCommand(method, params = {}) {
+      return new Promise((resolve) => {
+        const id = msgId++;
+        const handler = (evt) => {
+          const res = JSON.parse(evt.data);
+          if (res.id === id) {
+            ws.removeEventListener('message', handler);
+            resolve(res.result);
+          }
+        };
+        ws.addEventListener('message', handler);
+        ws.send(JSON.stringify({ id, method, params }));
+      });
+    }
+
+    await sendCommand('Page.enable');
+    await sendCommand('Emulation.setDeviceMetricsOverride', {
+      width: 320,
+      height: 800,
+      deviceScaleFactor: 1,
+      mobile: true
+    });
+
+    await new Promise(r => setTimeout(r, 400));
+
+    const evalRes = await sendCommand('Runtime.evaluate', {
+      expression: `
+        (() => {
+          const elements = Array.from(document.querySelectorAll('*'));
+          const list = [];
+          for (const el of elements) {
+            const style = window.getComputedStyle(el);
+            if (style.position === 'fixed') continue;
+            const r = el.getBoundingClientRect();
+            if (r.right > 320.5) {
+              list.push({
+                tag: el.tagName,
+                class: el.className,
+                id: el.id,
+                right: Math.round(r.right),
+                width: Math.round(r.width),
+                scrollWidth: el.scrollWidth,
+                text: el.textContent.substring(0, 30).replace(/\\s+/g, ' ')
+              });
+            }
+          }
+          return list;
+        })()
+      `,
+      returnByValue: true
+    });
+
+    console.log("Elements extending past 320px:", evalRes.result.value);
+
+    ws.close();
+  } finally {
+    edge.kill();
+  }
+}
+
+function fetchJson(url) {
+  return new Promise((resolve, reject) => {
+    http.get(url, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => resolve(JSON.parse(data)));
+    }).on('error', reject);
+  });
+}
+
+checkPage();
