@@ -136,6 +136,9 @@ def render_page_shell(path, title, meta_desc, h1, body_content, og_image="/asset
 
   <!-- Scripts -->
   <script src="/assets/js/main.js" defer></script>
+
+  <!-- 100% privacy-first analytics -->
+  <script data-collect-dnt="true" data-detect-404="true" async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 </body>
 </html>'''
 
